@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.time-section, .todo-section, .rss-section {
+    margin-bottom: 20px;
+}
+
+.clock-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.clock {
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.rss-feed {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
