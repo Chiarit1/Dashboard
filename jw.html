@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiornamenti JW.org</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #rss-feed {
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .feed-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aggiornamenti JW.org</h1>
+
+    <!-- Sezione per visualizzare RSS da jw.org -->
+    <div id="rss-feed"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const rssFeedUrl = 'https://www.jw.org/en/whats-new/rss/WhatsNewWebArticles/feed.xml';
+
+            $.ajax({
+                url: 'https://api.rss2json.com/v1/api.json',
+                type: 'GET',
+                data: {
+                    rss_url: rssFeedUrl
+                },
+                success: function (data) {
+                    const rssFeedContainer = $('#rss-feed');
+                    rssFeedContainer.empty();
+
+                    if (data.items.length > 0) {
+                        data.items.forEach(function (item) {
+                            const feedItem = $('<div class="feed-item">');
+                            feedItem.append($('<h3>').text(item.title));
+                            feedItem.append($('<p>').html(item.description));
+                            rssFeedContainer.append(feedItem);
+                        });
+
+                        // Aggiungi uno scorrimento automatico (opzionale)
+                        rssFeedContainer.css('overflow', 'hidden');
+                        setInterval(function () {
+                            rssFeedContainer.animate({ scrollTop: '+=50' }, 'slow');
+                        }, 3000);
+                    } else {
+                        rssFeedContainer.text('Nessun elemento RSS trovato.');
+                    }
+                },
+                error: function (error) {
+                    console.error('Errore nella chiamata API RSS:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
